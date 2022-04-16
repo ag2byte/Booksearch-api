@@ -8,6 +8,7 @@ const {OAuth2Client} = require('google-auth-library')
 const Searchhistory = require('./models/searchhistory')
 const bodyParser = require('body-parser')
 const session = require('express-session')
+const MemoryStore = require('memorystore')(session)
 const client = new OAuth2Client(process.env.GOOGLE_AUTH_CLIENT_ID)
 
 
@@ -24,6 +25,10 @@ mongoose.connect(dburi) // connect to the mogodb database
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(session({
+  cookie:{maxAge: 86400000 },
+  store: new MemoryStore({
+    checkPeriod:86400000
+  }),
   secret:process.env.SESSION_SECRET,
   resave:false,
   saveUninitialized:false
