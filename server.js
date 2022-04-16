@@ -15,7 +15,7 @@ const dburi = process.env.MONGODB_CONNECTION_STRING
 mongoose.connect(dburi) // connect to the mogodb database
 .then((res) => {
   console.log("Database connection successfull")
-  app.listen(port, () => {
+  app.listen(process.env.PORT || port, () => {
     console.log(`Listening on port: ${port}`)
   })
 })
