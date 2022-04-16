@@ -3,7 +3,7 @@ const dotenv = require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
 const app = express()
-const port = 5000
+// const port = 5000
 const {OAuth2Client} = require('google-auth-library')
 const Searchhistory = require('./models/searchhistory')
 const bodyParser = require('body-parser')
@@ -15,8 +15,8 @@ const dburi = process.env.MONGODB_CONNECTION_STRING
 mongoose.connect(dburi) // connect to the mogodb database
 .then((res) => {
   console.log("Database connection successfull")
-  app.listen(process.env.PORT || port, () => {
-    console.log(`Listening on port: ${port}`)
+  app.listen(process.env.PORT || 5000, () => {
+    console.log(`App running`)
   })
 })
 .catch(err => console.log(err))
