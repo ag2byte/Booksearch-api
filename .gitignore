@@ -13,3 +13,4 @@ benchmarks/graphs
 
 #env files
 .env
+env_variables.yaml
