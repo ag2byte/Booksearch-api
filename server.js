@@ -24,6 +24,10 @@ mongoose.connect(dburi) // connect to the mogodb database
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use((req,res,next) => {
+  res.header('Access-Control-Allow-Origin', '*')
+  next()
+})
 app.use(session({
   cookie:{maxAge: 86400000 },
   store: new MemoryStore({
