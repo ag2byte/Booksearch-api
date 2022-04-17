@@ -21,22 +21,15 @@ mongoose.connect(dburi) // connect to the mogodb database
   })
 })
 .catch(err => console.log(err))
-app.use(cors())
-// app.use((req, res, next) => {
-//   res.header("Access-Control-Allow-Origin", "*")
-//   res.header(
-//     "Access-Control-Allow-Headers",
-//     "Origin, X-Requested, Content-Type, Accept Authorization"
-//   )
-//   if (req.method === "OPTIONS") {
-//     res.header(
-//       "Access-Control-Allow-Methods",
-//       "POST, PUT, PATCH, GET, DELETE"
-//     )
-//     return res.status(200).json({})
-//   }
-//   next()
-// })
+
+//cors
+app.use((req,res,next) =>{
+  res.header('Access-Control-Allow-Origin','*')
+  res.header('Access-Control-Allow-Methods','GET,PUT,POST,DELETE')
+  res.header('Access-Control-Allow-Headers','Content-Type')
+  next()
+})
+
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -65,6 +58,12 @@ app.get("/",(req,res)  =>{
         })
         .catch((err) => console.log(err))
 }
+
+app.get('/testcors',(req,res) =>{
+  var p = {hi:"hi"}
+  res.send(p)
+
+})
 
 app.get('/history',(req,res) =>{//this can be used to get the history of searches made by the current user
   // console.log('srwerwerwer')
