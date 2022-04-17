@@ -22,7 +22,21 @@ mongoose.connect(dburi) // connect to the mogodb database
 })
 .catch(err => console.log(err))
 
-app.use(cors())
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*")
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested, Content-Type, Accept Authorization"
+  )
+  if (req.method === "OPTIONS") {
+    res.header(
+      "Access-Control-Allow-Methods",
+      "POST, PUT, PATCH, GET, DELETE"
+    )
+    return res.status(200).json({})
+  }
+  next()
+})
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -39,7 +53,7 @@ app.use(session({
 
 
 app.get("/",(req,res)  =>{
-  
+  // console.log("sdjkhfskjdhfksjdhf");
   res.send("Server up")
 })
 
@@ -53,8 +67,10 @@ app.get("/",(req,res)  =>{
 }
 
 app.get('/history',(req,res) =>{//this can be used to get the history of searches made by the current user
+  // console.log('srwerwerwer')
   if(req.session.user)
-  {Searchhistory.find().where('useremail').equals(req.session.user.email)
+  {
+    Searchhistory.find().where('useremail').equals(req.session.user.email)
     .then(response => res.send(response))
     .catch(err => console.log(err))}
   else{
@@ -78,7 +94,8 @@ app.post('/verifyToken',async (req,res) =>{//verify OAuth token for valid user
   }
   req.session.user = user
   req.session.searches = []
-  
+  // console.log(user)
+  console.log(req.session.user)
   res.send(user)
   
 
